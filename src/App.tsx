@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { Route, Switch } from 'react-router';
+import { Home } from './home/home';
+import { History } from './history/history';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  const [language, setLanguage] = React.useState<"ru"|'en'>('ru')
+
+  React.useEffect(()=> {
+    const userLang = navigator.language.substr(0,2)
+    if(userLang !== 'ru') setLanguage('en')
+  },[])
+
+  return <>
+  
+  
+  <Switch>
+    {<Route path="/history">
+      <History lang={language}/>
+    </Route>}
+    <Route path="/">
+      <Home lang={language} />
+    </Route>
+  </Switch>
+  </>
 }
 
 export default App;
